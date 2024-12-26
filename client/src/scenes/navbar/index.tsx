@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import CandlestickChartTwoToneIcon from "@mui/icons-material/CandlestickChartTwoTone";
 import { Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "@/components/FlexBetween";
@@ -8,7 +7,18 @@ type Props = {};
 
 const Navbar = (props: Props) => {
   const { palette } = useTheme();
-  const [selected, setSelected] = useState("dashboard");
+
+  // Define styles for active and inactive links
+  const activeStyle = {
+    color: "inherit",
+    textDecoration: "inherit",
+  };
+
+  const inactiveStyle = {
+    color: palette.grey[700],
+    textDecoration: "inherit",
+  };
+
   return (
     <FlexBetween mb="0.25rem" p="0.5rem 0rem" color={palette.grey[300]}>
       {/* LEFT SIDE */}
@@ -22,28 +32,20 @@ const Navbar = (props: Props) => {
       {/* RIGHT SIDE */}
       <FlexBetween gap="2rem">
         <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
-          <Link
+          <NavLink
             to="/"
-            onClick={() => setSelected("dashboard")}
-            style={{
-              color: selected === "dashboard" ? "inherit" : palette.grey[700],
-              textDecoration: "inherit",
-            }}
+            style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
           >
             Dashboard
-          </Link>
+          </NavLink>
         </Box>
         <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
-          <Link
+          <NavLink
             to="/predictions"
-            onClick={() => setSelected("predictions")}
-            style={{
-              color: selected === "predictions" ? "inherit" : palette.grey[700],
-              textDecoration: "inherit",
-            }}
+            style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
           >
             Predictions
-          </Link>
+          </NavLink>
         </Box>
       </FlexBetween>
     </FlexBetween>
