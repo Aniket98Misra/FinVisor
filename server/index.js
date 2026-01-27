@@ -22,7 +22,10 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  credentials: true
+}));
 
 /*Routes */
 app.use("/kpi", kpiRoutes);
@@ -35,12 +38,16 @@ mongoose
     // useNewUrlParser: true,
     // useUnifiedTopology: true,
   })
-  .then(async () => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+  .then(() => {
+    if (process.env.NODE_ENV !== "production") {
+        app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    }
+  })
+    //app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
     /*Add data one time only*/
     // await mongoose.connection.db.dropDatabase();
     // KPI.insertMany(kpis);
     // Product.insertMany(products);
     // Transaction.insertMany(transactions);
-  })
+  //})
   .catch((error) => console.log(`${error} did not connect`));
