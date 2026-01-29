@@ -28,9 +28,9 @@ app.use(cors({
 }));
 
 /*Routes */
-app.use("/kpi", kpiRoutes);
-app.use("/product", productRoutes);
-app.use("/transaction", transactionRoutes);
+app.use("/api/kpi", kpiRoutes);
+app.use("/api/product", productRoutes);
+app.use("/api/transaction", transactionRoutes);
 /*Mongoose Setup */
 const PORT = process.env.PORT || 9000;
 mongoose
